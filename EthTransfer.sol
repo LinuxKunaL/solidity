@@ -28,4 +28,8 @@ contract wallet {
     function transferEth() public payable checkAddressIsNotEmpry {
         payable(ToAddress).transfer(msg.value);
     }
+
+    function getCotractAddress() public view returns (address) {
+        return address(this);
+    }
 }
