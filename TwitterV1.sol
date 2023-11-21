@@ -24,7 +24,7 @@ contract twitter {
         TweetStruct[] memory ArrayOfStruct = new TweetStruct[](
             TweetsIds.length
         );
-
+//
         for (uint256 i = 0; i < TweetsIds.length; i++) {
             ArrayOfStruct[i] = mapTweet[TweetsIds[i]];
         }
