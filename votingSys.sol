@@ -24,6 +24,11 @@ contract Voting {
         string calldata _gender,
         uint256 _age
     ) public {
+        require(
+            CandidateVerification(msg.sender),
+            "account is already exist !!"
+        );
+
         candidateDetails[candidateId] = Candidate(
             candidateId,
             _name,
@@ -35,8 +40,24 @@ contract Voting {
         candidateId += 1;
     }
 
-    // function CandidateVerification(params) {
-       
-    // }
+    function CandidateVerification(address _sender)
+        private
+        view
+        returns (bool)
+    {
+        for (uint256 i = 0; i <= candidateId; i++) {
+            if (candidateDetails[i].Address == _sender) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    function CandidateList() public view returns (Candidate[] memory) {
+        Candidate[] memory array = new Candidate[](candidateId - 1);
+        for (uint256 i = 1; i < candidateId; i++) {
+            array[i - 1] = candidateDetails[i];
+        }
+        return array;
+    }
 }
