@@ -6,10 +6,10 @@ To make scracth ERC20 Token
     - define / make interface 
         - function : totalSupply () external view returns(uint)
         - function : balanceOf (address account) external view returns(uint)
-        - function : transfer(address recipent , uint amount) external returns(bool)
-        - function : allowance(address owner , address spender) external returns(uint)
-        - function : approve(address spender,uint amount) external returns(bool)
-        - function : transferForm(address sender , address recipent , uint amount) external returns(bool)
+        - function : transfer(address recipent , uint amount) external view returns(bool)
+        - function : allowance(address owner , address spender) external view returns(uint)
+        - function : approve(address spender,uint amount) external view returns(bool)
+        - function : transferForm(address sender , address recipent , uint amount) external view returns(bool)
 
         - event : Transfer(address indexed from, address indexed to, uint value)
         - event : Approval(address indexed owner , address indexed spender , uint value)
@@ -36,10 +36,9 @@ interface ERC20 {
 
     function transfer(address recipent, uint256 amount) external returns (bool);
 
-    function allowance(
-        address owner,
-        address spender
-    ) external returns (uint256);
+    function allowance(address owner, address spender)
+        external
+        returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
@@ -64,12 +63,12 @@ interface ERC20 {
 }
 
 contract Giga is ERC20 {
-    string public name = "Giga";
-    string public symbol = "GI";
+    string public name = "kunal";
+    string public symbol = "KL";
     string public founderName = "kunal lokhande";
     address public founder;
 
-    uint256 public decimal = 0;
+    uint256 public decimal = 16;
     mapping(address => uint256) public balance;
     uint256 public totalSupply;
     mapping(address => mapping(address => uint256)) allowed;
@@ -83,36 +82,46 @@ contract Giga is ERC20 {
     modifier CheckBalance(uint256 _amount) {
         require(_amount > 0, "amount must be greater then zero");
         require(balance[msg.sender] >= _amount, "you don't have balance");
+
         _;
     }
 
-    function balanceOf(
-        address _account
-    ) public view override returns (uint256) {
+    function balanceOf(address _account)
+        public
+        view
+        override
+        returns (uint256)
+    {
         return balance[_account];
     }
 
-    function transfer(
-        address _recipent,
-        uint256 _amount
-    ) public override CheckBalance(_amount) returns (bool) {
+    function transfer(address _recipent, uint256 _amount)
+        public
+        override
+        CheckBalance(_amount)
+        returns (bool)
+    {
         balance[msg.sender] -= _amount;
         balance[_recipent] += _amount;
         emit Transfer(msg.sender, _recipent, _amount);
         return true;
     }
 
-    function allowance(
-        address _owner,
-        address _spender
-    ) public view override returns (uint256) {
+    function allowance(address _owner, address _spender)
+        public
+        view
+        override
+        returns (uint256)
+    {
         return allowed[_owner][_spender];
     }
 
-    function approve(
-        address _spender,
-        uint256 _amount
-    ) public override CheckBalance(_amount) returns (bool) {
+    function approve(address _spender, uint256 _amount)
+        public
+        override
+        CheckBalance(_amount)
+        returns (bool)
+    {
         allowed[msg.sender][_spender] = _amount;
         emit Approval(msg.sender, _spender, _amount);
         return true;
@@ -133,5 +142,13 @@ contract Giga is ERC20 {
         balance[_recipent] += _amount;
         emit Transfer(msg.sender, _recipent, _amount);
         return true;
+    }
+
+    function addSupply(uint256 _amount) public {
+        totalSupply += _amount;
+    }
+
+    function removeSupply(uint256 _amount) public {
+        totalSupply -= _amount;
     }
 }
