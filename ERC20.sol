@@ -77,6 +77,7 @@ contract Giga is ERC20 {
     constructor() {
         totalSupply = 1000;
         founder = msg.sender;
+        balance[founder] = totalSupply;
     }
 
     modifier CheckBalance(uint256 _amount) {
