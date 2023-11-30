@@ -15,7 +15,7 @@ contract Dao {
     }
 
     // making mapping
- 
+
     mapping(address => bool) private isInvestor;
     mapping(address => uint256) public numOfshares;
     mapping(address => mapping(uint256 => bool)) public isVoted;
@@ -138,7 +138,7 @@ contract Dao {
         _transfer(proposal.amount, proposal.receipient);
     }
 
-    function _transfer(uint256 _amount, address payable _receipient) private  {
+    function _transfer(uint256 _amount, address payable _receipient) private {
         _receipient.transfer(_amount);
     }
 
@@ -150,4 +150,9 @@ contract Dao {
         }
         return array;
     }
+
+    function InvestorList() public view returns (address[] memory) {
+        return investorList;
+    }
 }
+
