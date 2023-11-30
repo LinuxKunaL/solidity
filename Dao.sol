@@ -144,8 +144,8 @@ contract Dao {
 
     // mapping to array
     function ProposalLists() public view returns (Proposal[] memory) {
-        Proposal[] memory array = new Proposal[](nextProposalId - 1);
-        for (uint256 i = 1; i < nextProposalId; i++) {
+        Proposal[] memory array = new Proposal[](nextProposalId);
+        for (uint256 i = 0; i < nextProposalId; i++) {
             array[i] = proposals[i];
         }
         return array;
