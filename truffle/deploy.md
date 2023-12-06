@@ -69,7 +69,8 @@ To configure for a testnet using Alchemy, follow these steps:
 goerli: {
     provider: () => new HDWalletProvider("metamask security phase", "api url with key"),
     network_id: 5,
-}```
+}
+```
 
 Make sure to replace "meta mask security phase" with your MetaMask security phrase and "api url with key" with your Alchemy API URL, including the key.
 
