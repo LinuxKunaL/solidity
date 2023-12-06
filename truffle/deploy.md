@@ -53,6 +53,7 @@ development: {
     port: 7545,
     network_id: "*",
 }
+````
 
 ## Testnet (Alchemy) Configuration
 
